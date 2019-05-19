@@ -34,7 +34,7 @@ class NapTimeSkill(MycroftSkill):
         self.add_event('mycroft.awoken', self.handle_awoken)
         self.wake_word = Configuration.get()['listener']['wake_word']
 
-    @intent_handler(IntentBuilder("NapTimeIntent").require("SleepCommand"))
+    @intent_handler(IntentBuilder("").require("SleepCommand"))
     def handle_go_to_sleep(self, message):
         """
             Sends a message to the speech client setting the listener in a
@@ -50,7 +50,7 @@ class NapTimeSkill(MycroftSkill):
         if count <= 5:
             self.speak_dialog('going.to.sleep', {'wake_word': self.wake_word})
         else:
-            self.speak_dialog('going.to.sleep.short')
+            self.speak_dialog('going.to.sleep', {'wake_word': self.wake_word})
         
         self.bus.emit(Message('recognizer_loop:sleep'))
         self.sleeping = True
